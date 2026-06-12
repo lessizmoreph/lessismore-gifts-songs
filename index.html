@@ -1730,6 +1730,10 @@ footer {
       packages:  ['⭐ Starter — ₱120 (1 song)','🌟 Bundle — ₱199 (2 songs)','🎬 Slideshow Video — ₱299 (Song + Ken Burns video)','🎥 Cinematic — ₱1,999 (Full music video)'],
       contactQ:  "Almost done! 🙌 What's your name and best contact number so we can reach you?",
       contactP:  "e.g. Maria Santos, 09171234567",
+      occasionOtherQ: "You selected 'Other' — please describe the occasion briefly.",
+      occasionOtherP: "e.g. Retirement party, Debut, Baptism, Farewell...",
+      notesQ:    "Last one! 📝 Any special notes or requests for us? (Type N/A if none)",
+      notesP:    "e.g. Please include the word 'Ilaw', she loves acoustic guitar...",
       summaryQ:  "Here's your order summary! Please review:",
       summaryBtn:"✅ Confirm & Send Order",
       successH:  "Order Received! 🎵",
@@ -1752,6 +1756,10 @@ footer {
       packages:  ['⭐ Starter — ₱120 (1 kanta)','🌟 Bundle — ₱199 (2 kanta)','🎬 Slideshow Video — ₱299 (Kanta + Ken Burns video)','🎥 Cinematic — ₱1,999 (Buong music video)'],
       contactQ:  "Malapit na! 🙌 Ano ang iyong pangalan at contact number para makontak ka namin?",
       contactP:  "hal. Maria Santos, 09171234567",
+      occasionOtherQ: "Pinili mo ang 'Iba pa' — ilarawan nang maikli ang okasyon.",
+      occasionOtherP: "hal. Retirement party, Debut, Binyag, Paalam...",
+      notesQ:    "Huli na! 📝 May espesyal ka bang tala o kahilingan para sa amin? (I-type ang N/A kung wala)",
+      notesP:    "hal. Pakisama ang salitang 'Ilaw', mahilig siya sa acoustic guitar...",
       summaryQ:  "Ito ang buod ng iyong order! Pakisuri:",
       summaryBtn:"✅ Kumpirmahin at Ipadala",
       successH:  "Natanggap ang Order! 🎵",
@@ -1761,7 +1769,7 @@ footer {
     }
   };
 
-  var STEPS = ['occasion','recipient','story','style','package','contact'];
+  var STEPS = ['occasion','recipient','story','style','package','contact','notes'];
 
   // ── UI helpers ────────────────────────────────────────────────
   function scrollBot() { msgsEl.scrollTop = msgsEl.scrollHeight; }
@@ -1843,12 +1851,14 @@ footer {
     if (step >= STEPS.length) { showSummary(); return; }
 
     var qMap = {
-      occasion: function () { addBotMsg(c.occasionQ).then(function () { showOpts(c.occasions, pick); }); },
-      recipient:function () { addBotMsg(c.recipientQ).then(function () { showInput(c.recipientP, false); }); },
-      story:    function () { addBotMsg(c.storyQ).then(function () { showInput(c.storyP, true); }); },
-      style:    function () { addBotMsg(c.styleQ).then(function () { showOpts(c.styles, pick); }); },
-      package:  function () { addBotMsg(c.packageQ).then(function () { showOpts(c.packages, pick); }); },
-      contact:  function () { addBotMsg(c.contactQ).then(function () { showInput(c.contactP, false); }); }
+      occasion:      function () { addBotMsg(c.occasionQ).then(function () { showOpts(c.occasions, pick); }); },
+      occasionOther: function () { addBotMsg(c.occasionOtherQ).then(function () { showInput(c.occasionOtherP, false); }); },
+      recipient:     function () { addBotMsg(c.recipientQ).then(function () { showInput(c.recipientP, false); }); },
+      story:         function () { addBotMsg(c.storyQ).then(function () { showInput(c.storyP, true); }); },
+      style:         function () { addBotMsg(c.styleQ).then(function () { showOpts(c.styles, pick); }); },
+      package:       function () { addBotMsg(c.packageQ).then(function () { showOpts(c.packages, pick); }); },
+      contact:       function () { addBotMsg(c.contactQ).then(function () { showInput(c.contactP, false); }); },
+      notes:         function () { addBotMsg(c.notesQ).then(function () { showInput(c.notesP, true); }); }
     };
 
     qMap[id]();
@@ -1857,6 +1867,10 @@ footer {
   function pick(val) {
     answers[STEPS[step]] = val;
     addUserMsg(val);
+    // If "Other / Iba pa" chosen for occasion, insert a follow-up text step
+    if (STEPS[step] === 'occasion' && (val.indexOf('Other') !== -1 || val.indexOf('Iba pa') !== -1)) {
+      STEPS.splice(step + 1, 0, 'occasionOther');
+    }
     step++;
     runStep();
   }
@@ -1864,7 +1878,12 @@ footer {
   function handleSend() {
     var val = inputEl.value.trim();
     if (!val) return;
-    answers[STEPS[step]] = val;
+    // occasionOther appends detail to the occasion answer
+    if (STEPS[step] === 'occasionOther') {
+      answers.occasion = answers.occasion + ' — ' + val;
+    } else {
+      answers[STEPS[step]] = val;
+    }
     addUserMsg(val);
     inputEl.value = '';
     inputEl.rows = 1;
@@ -1897,7 +1916,8 @@ footer {
         '📖 ' + (lang==='en'?'Story':'Kwento') + ': ' + answers.story + '<br>' +
         '🎵 ' + (lang==='en'?'Style':'Estilo') + ': ' + answers.style + '<br>' +
         '📦 ' + (lang==='en'?'Package':'Pakete') + ': ' + answers.package + '<br>' +
-        '📱 ' + (lang==='en'?'Contact':'Contact') + ': ' + answers.contact;
+        '📱 ' + (lang==='en'?'Contact':'Contact') + ': ' + answers.contact + '<br>' +
+        '📝 ' + (lang==='en'?'Notes':'Tala') + ': ' + (answers.notes || 'N/A');
       msgsEl.appendChild(card);
 
       var btn = document.createElement('button');
@@ -1923,7 +1943,8 @@ footer {
         Story: answers.story,
         Style: answers.style,
         Package: answers.package,
-        Contact: answers.contact
+        Contact: answers.contact,
+        Notes: answers.notes || 'N/A'
       })
     }).catch(function () {});
 
