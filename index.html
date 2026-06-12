@@ -502,7 +502,8 @@ a { color: inherit; text-decoration: none; }
 /* ============================================================
    PRICING
    ============================================================ */
-.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 52px; align-items: start; }
+.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-top: 52px; align-items: start; }
+@media (max-width: 1100px) { .pricing-grid { grid-template-columns: repeat(2,1fr); } }
 .price-card {
   background: var(--white); border: 1.5px solid var(--cream-dark);
   border-radius: 7px; padding: 36px 28px 32px; position: relative;
@@ -1035,18 +1036,36 @@ footer {
       </div>
 
       <div class="price-card">
-        <div class="price-name">Premium</div>
-        <div class="price-amount"><span>₱</span>499</div>
-        <div class="price-sub">Song + Music Video</div>
+        <div class="price-name">Slideshow Video</div>
+        <div class="price-amount"><span>₱</span>299</div>
+        <div class="price-sub">Song + Ken Burns Video</div>
         <hr class="price-divider">
         <ul class="price-features">
           <li class="price-feature">1 original personalized song</li>
-          <li class="price-feature">Lyric video or slideshow video</li>
+          <li class="price-feature">Slideshow video using your photos</li>
+          <li class="price-feature">Ken Burns effect — gentle zooms &amp; pans that make still photos feel alive and cinematic</li>
           <li class="price-feature">MP3 + MP4 delivery</li>
-          <li class="price-feature">Delivered in 5–7 days</li>
+          <li class="price-feature">Delivered within 3 days</li>
+          <li class="price-feature">2 free revisions</li>
+        </ul>
+        <a href="#order" class="price-btn">Get Slideshow</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Cinematic</div>
+        <div class="price-amount" style="font-size:42px;"><span style="font-size:20px;">₱</span>1,999</div>
+        <div class="price-sub">Full Music Video</div>
+        <hr class="price-divider">
+        <ul class="price-features">
+          <li class="price-feature">1 original personalized song</li>
+          <li class="price-feature">Full cinematic music video — everything moves, every scene is alive</li>
+          <li class="price-feature">AI-generated video footage &amp; animations</li>
+          <li class="price-feature">Professional color grading &amp; captions</li>
+          <li class="price-feature">MP3 + HD MP4 delivery</li>
+          <li class="price-feature">Delivered within 5–7 days</li>
           <li class="price-feature">3 free revisions</li>
         </ul>
-        <a href="#order" class="price-btn">Go Premium</a>
+        <a href="#order" class="price-btn">Go Cinematic</a>
       </div>
 
     </div>
@@ -1570,7 +1589,7 @@ footer {
       styleQ:    "What music style fits best?",
       styles:    ['🎵 Pop / OPM','🙏 Worship / Devotional','🎸 Acoustic / Folk','💃 Upbeat / Celebratory','🎤 R&B / Soul','🎼 Classical / Ballad','🤷 Not sure — surprise me!'],
       packageQ:  "Which package would you like?",
-      packages:  ['⭐ Starter — ₱120 (1 song)','🌟 Bundle — ₱199 (2 songs)','✨ Premium — ₱499 (Song + Video)'],
+      packages:  ['⭐ Starter — ₱120 (1 song)','🌟 Bundle — ₱199 (2 songs)','🎬 Slideshow Video — ₱299 (Song + Ken Burns video)','🎥 Cinematic — ₱1,999 (Full music video)'],
       contactQ:  "Almost done! 🙌 What's your name and best contact number so we can reach you?",
       contactP:  "e.g. Maria Santos, 09171234567",
       summaryQ:  "Here's your order summary! Please review:",
@@ -1592,7 +1611,7 @@ footer {
       styleQ:    "Anong estilo ng musika ang pinakaangkop?",
       styles:    ['🎵 Pop / OPM','🙏 Worship / Debosyonal','🎸 Acoustic / Folk','💃 Masaya / Celebrasyon','🎤 R&B / Soul','🎼 Classical / Balad','🤷 Hindi ko alam — ikaw na bahala!'],
       packageQ:  "Anong pakete ang gusto mo?",
-      packages:  ['⭐ Starter — ₱120 (1 kanta)','🌟 Bundle — ₱199 (2 kanta)','✨ Premium — ₱499 (Kanta + Video)'],
+      packages:  ['⭐ Starter — ₱120 (1 kanta)','🌟 Bundle — ₱199 (2 kanta)','🎬 Slideshow Video — ₱299 (Kanta + Ken Burns video)','🎥 Cinematic — ₱1,999 (Buong music video)'],
       contactQ:  "Malapit na! 🙌 Ano ang iyong pangalan at contact number para makontak ka namin?",
       contactP:  "hal. Maria Santos, 09171234567",
       summaryQ:  "Ito ang buod ng iyong order! Pakisuri:",
