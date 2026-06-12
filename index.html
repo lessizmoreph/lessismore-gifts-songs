@@ -1388,6 +1388,144 @@ footer {
 </script>
 
 <!-- ============================================================
+     SECTION BACKGROUND ANIMATIONS
+     ============================================================ -->
+<style>
+/* Shared positioning for animated sections */
+#how-it-works, #pricing, .occ-section, .testi-section, .about-section { position: relative; overflow: hidden; }
+
+/* How It Works — scrolling faint music staff lines */
+#how-it-works::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 42px, rgba(184,137,42,.045) 42px, rgba(184,137,42,.045) 43px);
+  animation: staffScroll 28s linear infinite;
+}
+@keyframes staffScroll { to { background-position: 0 86px; } }
+
+/* Occasions — shimmer pulse behind cards */
+.occ-section::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 50%, rgba(184,137,42,.07) 0%, transparent 65%);
+  animation: occShimmer 8s ease-in-out infinite alternate;
+}
+@keyframes occShimmer { from { opacity: .35; transform: scale(.96); } to { opacity: 1; transform: scale(1.04); } }
+
+/* Sample Songs (dark) — gold orbs drifting in the dark */
+.orb {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(212,168,83,.18) 0%, transparent 70%);
+  animation: orbDrift var(--odur) ease-in-out var(--odel) infinite alternate;
+}
+@keyframes orbDrift {
+  from { transform: translate(0,0) scale(1); opacity: var(--oopa); }
+  to   { transform: translate(var(--odx),var(--ody)) scale(var(--osc)); opacity: calc(var(--oopa) * .5); }
+}
+
+/* Pricing — slow aurora mesh */
+#pricing::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 65% at 8% 25%, rgba(184,137,42,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 55% at 92% 80%, rgba(212,168,83,.055) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 50% at 50% 105%, rgba(184,137,42,.06) 0%, transparent 48%);
+  animation: pricingAurora 10s ease-in-out infinite alternate;
+}
+@keyframes pricingAurora { from { opacity: .5; transform: scale(1); } to { opacity: 1; transform: scale(1.07); } }
+
+/* Testimonials — gentle radial pulse */
+.testi-section::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 65% 60% at 50% 50%, rgba(184,137,42,.055) 0%, transparent 60%);
+  animation: testiGlow 7s ease-in-out infinite alternate;
+}
+@keyframes testiGlow { from { opacity: .3; transform: scale(.94); } to { opacity: 1; transform: scale(1.06); } }
+
+/* About — soft diagonal gradient drift */
+.about-section::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 90% 20%, rgba(184,137,42,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(212,168,83,.045) 0%, transparent 50%);
+  animation: aboutDrift 11s ease-in-out infinite alternate;
+}
+@keyframes aboutDrift { from { opacity: .5; transform: translate(0,0); } to { opacity: 1; transform: translate(12px,-8px); } }
+
+/* CTA banner — bring existing radials to life */
+.cta-section::before { animation: ctaAurora 9s ease-in-out infinite alternate; }
+@keyframes ctaAurora { from { opacity: .55; transform: scale(1); } to { opacity: 1; transform: scale(1.12); } }
+
+/* Ensure section content stays above animation layers */
+#how-it-works .wrap, .occ-section .wrap, #pricing .wrap,
+.testi-section .wrap, .about-section .wrap { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  #how-it-works::before, .occ-section::after, #pricing::before,
+  .testi-section::before, .about-section::before, .cta-section::before { animation: none !important; }
+  .orb { animation: none !important; }
+}
+</style>
+
+<script>
+/* Inject floating notes + drifting orbs into sections */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var chars = ['♪','♫','♬','♩'];
+
+  function injectNotes(el, count) {
+    if (!el) return;
+    el.style.position = 'relative';
+    var bg = document.createElement('div');
+    bg.setAttribute('aria-hidden','true');
+    bg.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;';
+    el.insertBefore(bg, el.firstChild);
+    for (var i = 0; i < count; i++) {
+      var n = document.createElement('span');
+      n.className = 'note';
+      n.setAttribute('aria-hidden','true');
+      n.textContent = chars[i % chars.length];
+      var sz = (10 + Math.random() * 13) + 'px';
+      n.style.cssText =
+        'left:'  + (4  + Math.random() * 92) + '%;' +
+        'top:'   + (5  + Math.random() * 85) + '%;' +
+        'font-size:' + sz + ';' +
+        '--dur:' + (11 + Math.random() * 11) + 's;' +
+        '--delay:' + (Math.random() * 9) + 's;' +
+        '--rot:' + (Math.random() * 36 - 18) + 'deg;';
+      bg.appendChild(n);
+    }
+  }
+
+  function injectOrbs(el, count) {
+    if (!el) return;
+    for (var i = 0; i < count; i++) {
+      var orb = document.createElement('div');
+      orb.className = 'orb';
+      var sz  = (120 + Math.random() * 200) + 'px';
+      var dx  = (Math.random() * 80  - 40)  + 'px';
+      var dy  = (Math.random() * 60  - 30)  + 'px';
+      var osc = 0.75 + Math.random() * 0.5;
+      orb.style.cssText =
+        'width:' + sz + ';height:' + sz + ';' +
+        'left:'  + (Math.random() * 100) + '%;' +
+        'top:'   + (Math.random() * 100) + '%;' +
+        '--odur:' + (9  + Math.random() * 8) + 's;' +
+        '--odel:' + (Math.random() * 6) + 's;' +
+        '--odx:' + dx + ';--ody:' + dy + ';' +
+        '--osc:' + osc + ';' +
+        '--oopa:1;';
+      el.insertBefore(orb, el.firstChild);
+    }
+  }
+
+  injectNotes(document.getElementById('how-it-works'), 10);
+  injectNotes(document.querySelector('.cta-section'), 14);
+  injectNotes(document.querySelector('.testi-section'), 8);
+  injectOrbs(document.querySelector('.samples-section'), 7);
+})();
+</script>
+
+<!-- ============================================================
      CHAT ORDER BOT
      ============================================================ -->
 <style>
