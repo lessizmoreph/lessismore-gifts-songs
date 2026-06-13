@@ -615,6 +615,15 @@ footer {
   background: #1C0E08; padding: 36px 28px;
   color: rgba(248,243,236,.45);
 }
+.footer-built {
+  margin-top: 28px; padding-top: 20px;
+  border-top: 1px solid rgba(248,243,236,.1);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  opacity: .6; transition: opacity .2s;
+}
+.footer-built:hover { opacity: 1; }
+.footer-built span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(248,243,236,.6); }
+.footer-built img { height: 36px; width: auto; border-radius: 4px; }
 .footer-inner {
   max-width: var(--maxw); margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center;
@@ -1152,9 +1161,13 @@ footer {
     </a>
     <p class="footer-copy">© 2026 Less Is More Personalized Designs · Philippines</p>
     <div class="footer-links">
-      <!-- TODO: Replace with actual Facebook URL -->
       <a href="https://www.facebook.com/profile.php?id=100064516277140" target="_blank" rel="noopener">Facebook</a>
       <a href="mailto:lessizmore.ph@gmail.com">Email</a>
+    </div>
+    <div class="footer-built">
+      <span>Website by</span>
+      <img src="assets/images/pressed-down-digital-logo.jpg" alt="Pressed Down Digital">
+      <span>Pressed Down Digital</span>
     </div>
   </div>
 </footer>
