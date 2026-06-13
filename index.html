@@ -246,9 +246,9 @@ a { color: inherit; text-decoration: none; }
 .nav__inner {
   max-width: var(--maxw); margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  height: 100px; padding: 0 28px;
+  height: 116px; padding: 0 28px;
 }
-.nav__logo img { height: 88px; width: auto; }
+.nav__logo img { height: 100px; width: auto; }
 .nav__links { display: flex; align-items: center; gap: 28px; list-style: none; }
 .nav__links a {
   font-size: 13px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
@@ -318,6 +318,14 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   display: flex; flex-direction: column; justify-content: center;
   padding: clamp(52px,8vh,96px) 48px clamp(52px,8vh,96px) max(28px, calc((100vw - 1160px)/2 + 28px));
+}
+.hero__logo {
+  display: block;
+  height: clamp(100px, 14vw, 180px);
+  width: auto;
+  max-width: 100%;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 16px rgba(184,137,42,.18));
 }
 .hero__kicker {
   font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
@@ -676,7 +684,7 @@ footer {
       <li><a href="#how-it-works">How It Works</a></li>
       <li><a href="#samples">Sample Songs</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#order" class="nav__cta">Order Now</a></li>
+      <li><a href="#" class="nav__cta" onclick="event.preventDefault();document.getElementById('chatFab').click()">Order Now</a></li>
     </ul>
     <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -688,7 +696,7 @@ footer {
       <li><a href="#samples">Sample Songs</a></li>
       <li><a href="#pricing">Pricing</a></li>
     </ul>
-    <a href="#order" class="nav__cta btn">Order Now</a>
+    <a href="#" class="nav__cta btn" onclick="event.preventDefault();document.getElementById('chatFab').click()">Order Now</a>
   </div>
 </nav>
 
@@ -698,15 +706,16 @@ footer {
 <section class="hero" aria-label="Hero">
   <div class="notes-bg" aria-hidden="true"></div>
   <div class="hero__content">
-    <p class="hero__kicker rise d1">Less Is More · Personalized Gifts &amp; More</p>
-    <h1 class="hero__headline rise d2">
+    <img src="assets/images/logo-banner.png" alt="Less Is More Personalized Gifts" class="hero__logo rise d1">
+    <p class="hero__kicker rise d2">Personalized Gifts &amp; More · Since 2014</p>
+    <h1 class="hero__headline rise d3">
       Turn Your <em>Story</em><br>Into a Song
     </h1>
-    <p class="hero__sub rise d3">
+    <p class="hero__sub rise d4">
       A professional, personalized song crafted just for your loved one — for birthdays, anniversaries, weddings, and every moment worth remembering.
     </p>
     <div class="hero__actions rise d4">
-      <a href="#order" class="btn btn-primary">Order Your Song →</a>
+      <button class="btn btn-primary" onclick="document.getElementById('chatFab').click()">Order Your Song →</button>
       <a href="#samples" class="btn btn-secondary">Hear Samples</a>
     </div>
     <p class="hero__price rise d5">Starting at <strong>₱120</strong> &nbsp;·&nbsp; Delivered within 24 hours</p>
@@ -1143,12 +1152,16 @@ footer {
     <div class="reveal">
       <p class="cta-script">Your story deserves a song.</p>
       <h2 class="cta-title" id="cta-title">Ready to Make Someone's Day<br>Unforgettable?</h2>
-      <p class="cta-sub">Order via Facebook Messenger — we'll get back to you within the hour. Tell us the occasion, the recipient, and a few details about their story.</p>
-      <!-- TODO: Replace with your actual Facebook page Messenger URL -->
-      <a href="https://m.me/100064516277140" class="btn btn-primary" target="_blank" rel="noopener">
-        Order on Messenger →
-      </a>
-      <p class="cta-email">Or email us at <a href="mailto:lessizmore.ph@gmail.com" style="color:rgba(240,222,184,.55);text-decoration:underline;">lessizmore.ph@gmail.com</a></p>
+      <p class="cta-sub">Fill out our quick order form — tell us the occasion, the recipient, and a few details. We'll get back to you within 24 hours.</p>
+      <button class="btn btn-primary" style="font-size:16px;padding:18px 48px;" onclick="document.getElementById('chatFab').click()">
+        Order Now →
+      </button>
+      <p class="cta-email">
+        Or reach us directly on
+        <a href="https://m.me/100064516277140" target="_blank" rel="noopener" style="color:rgba(240,222,184,.55);text-decoration:underline;">Facebook Messenger</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:lessizmore.ph@gmail.com" style="color:rgba(240,222,184,.55);text-decoration:underline;">lessizmore.ph@gmail.com</a>
+      </p>
     </div>
   </div>
 </section>
